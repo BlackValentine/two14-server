@@ -18,7 +18,7 @@ const createProduct = (data) => {
             origin: data.origin,
             taste: data.taste,
             price: data.price,
-            // image: data.image
+            image: data.image
           })
 
           resolve({
