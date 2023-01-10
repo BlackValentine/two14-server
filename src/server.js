@@ -8,8 +8,9 @@ import cookieParser from 'cookie-parser';
 require('dotenv').config();
 
 let app = express();
+const frontEndPort = process.env.FE_PORT;
 const corsOptions ={
-  origin: process.env.FE_PORT, 
+  origin: `http://localhost:${frontEndPort}`, 
   credentials:true,
   optionSuccessStatus:200
 }
