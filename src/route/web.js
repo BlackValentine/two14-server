@@ -7,7 +7,7 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   router.get('/api/home/get-alluser', homeController.getAllUser)
 
-  router.get('/api/coffee/get-products', productController.handleGetProducts)
+  router.get('/api/get-all-coffee', productController.handleGetAllCoffee)
   router.post('/api/product/create-product', productController.handleCreateProduct)
   return app.use('/', router);
 }
