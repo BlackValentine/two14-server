@@ -6,11 +6,15 @@ import { randomImageName } from "../utils/utils";
 
 const bucketName = process.env.AWS_BUCKET_NAME
 
-const getAllCoffeeService = () => {
+const getAllProductService = (productType) => {
   return new Promise(async (resolve, reject) => {
     try {
       let products = [];
-      products = await db.ProductCoffee.findAll()
+      if (productType === 'coffee') {
+        products = await db.ProductCoffee.findAll()
+      } else if (productType === 'apparel') {
+        products = await db.ProductApparel.findAll()
+      }
 
       for (const product of products) {
         const getObjectParams = {
@@ -18,7 +22,7 @@ const getAllCoffeeService = () => {
           Key: product.image,
         }
         const command = new GetObjectCommand(getObjectParams);
-        const url = await getSignedUrl(s3, command, {expiresIn: 3600})
+        const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
 
         product.image = url;
       }
@@ -80,7 +84,20 @@ const createProduct = (data) => {
 
           resolve({
             errCode: 0,
-            errMessage: `Created product successful!`
+            errMessage: `Created a new coffee successful!`
+          })
+        } else if (data.type === "apparel") {
+          await db.ProductApparel.create({
+            name: data.name,
+            author: data.author,
+            description: data.description,
+            price: +data.price,
+            image: imageName
+          })
+
+          resolve({
+            errCode: 0,
+            errMessage: `Created a new apparel successful!`
           })
         }
         else {
@@ -98,5 +115,5 @@ const createProduct = (data) => {
 
 export default {
   createProduct,
-  getAllCoffeeService
+  getAllProductService
 }

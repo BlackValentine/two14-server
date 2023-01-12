@@ -1,7 +1,17 @@
 import productService from "../services/productService";
 
 const handleGetAllCoffee = async (req, res) => {
-  let products = await productService.getAllCoffeeService()
+  let products = await productService.getAllProductService('coffee')
+
+  return res.status(200).json({
+    errCode: 0,
+    errMessage: 'OK',
+    products
+  })
+}
+
+const handleGetAllApparel = async (req, res) => {
+  let products = await productService.getAllProductService('apparel')
 
   return res.status(200).json({
     errCode: 0,
@@ -18,5 +28,6 @@ const handleCreateProduct = async (req, res) => {
 
 export default {
   handleGetAllCoffee,
+  handleGetAllApparel,
   handleCreateProduct
 }
